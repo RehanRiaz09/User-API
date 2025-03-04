@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import messageUtil from '../utilities/message.js';
-import Response from '../utilities/Response.js';
+import Response from '../utilities/response.js';
 class userValidation {
   signup = (req, res, next) => {
     try {

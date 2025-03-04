@@ -1,6 +1,6 @@
 import inventoryService from '../services/inventoryService.js';
 import messageUtil from '../utilities/message.js';
-import Response from '../utilities/Response.js';
+import Response from '../utilities/response.js';
 import mongoose from 'mongoose';
 
 class inventoryController {

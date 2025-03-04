@@ -6,7 +6,7 @@ import {
   hashPassword,
 } from '../utilities/password.js';
 import jwtHelper from '../utilities/jwt.js';
-import Response from '../utilities/Response.js';
+import Response from '../utilities/response.js';
 import mongoose from 'mongoose';
 import User from '../model/user.js';
 import jwt from 'jsonwebtoken';
