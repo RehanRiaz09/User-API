@@ -6,7 +6,7 @@ import middleware from '../middleware/auth.js';
 
 routes.post('/signup', userController.SignUp);
 routes.post('/login', validatior.login, userController.Login);
-routes.get('/', userController.getAllUser);
+routes.get('/users', userController.getAllUser);
 routes.get('/:userId', userController.getOnlyId);
 routes.patch('/:userId', userController.userUpdate);
 routes.delete('/:userId', userController.userDelete);
