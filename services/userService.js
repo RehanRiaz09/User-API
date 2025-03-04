@@ -10,7 +10,7 @@ class userCrud {
     return await User.findById(userId);
   };
   findAll = async (query) => {
-    return await User.findAll(query);
+    return await User.find(query);
   };
   updateUser = async (query, data) => {
     return await User.findByIdAndUpdate(query, data, { new: true });
