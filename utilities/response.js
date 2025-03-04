@@ -1,4 +1,4 @@
-import messageUtil from '../utilities/message.js';
+import messageUtil from './message.js';
 import StatusCodes from 'http-status-codes';
 class Response {
   ExistallReady = async (res, message) => {
