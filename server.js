@@ -1,0 +1,22 @@
+import express from 'express';
+const app = express();
+import cors from 'cors';
+import routes from './routes/routes.js';
+import connectDB from './config/database.js';
+import multer from 'multer';
+
+connectDB();
+
+app.use(express.json({ urlencoded: true }));
+app.use(cors());
+
+const upload = multer({ dest: 'uploads/' });
+app.get('/', (req, res) => {
+  res.send('Welcome to Ecommerce APIs');
+});
+
+const PORT = process.env.PORT || 3000;
+app.use('/', routes);
+app.listen(PORT, () => {
+  console.log(`Server in running and listening on ${PORT}`);
+});

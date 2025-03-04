@@ -1,0 +1,6 @@
+SKU,name,totalSales,unitSold,inStock,restockDate
+1100,Laptop,200000,80,5,12/8/2024
+1101,Headphones,150000,100,20,11/12/2024
+1102,"T-Shirt	",20000,300,50,12/17/2024
+1103,Hat,30000,200,10,11/13/2024
+1104,Pants,35000,250,40,6/20/2024
