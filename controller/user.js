@@ -237,17 +237,19 @@ class UserController {
       const { email, currentPassword, newPassword } = req.body;
 
       if (!email || !currentPassword || !newPassword) {
-        return res
-          .status(400)
-          .send({ message: 'Please provide all required fields' });
+        return Response.badRequest(res, messageUtil.REQUIRED_ALL_FIELD);
+        // return res
+        //   .status(400)
+        //   .send({ message: 'Please provide all required fields' });
       }
 
       const checkUser = await User.findOne({ email });
 
       if (!checkUser) {
-        return res
-          .status(400)
-          .send({ message: 'User not found please register' });
+        return Response.notfound(res, messageUtil.NOT_FOUND);
+        // return res
+        //   .status(400)
+        //   .send({ message: 'User not found please register' });
       }
 
       const isMatchPassword = await comparePassword(
@@ -256,18 +258,20 @@ class UserController {
       );
 
       if (!isMatchPassword) {
-        return res
-          .status(400)
-          .send({ message: 'Current password does not match' });
+        return Response.badRequest(res, messageUtil.PASSWORD_NOT_MATCH);
+        // return res
+        //   .status(400)
+        //   .send({ message: 'Current password does not match' });
       }
 
       const newHashPassword = await hashPassword(newPassword);
 
       await User.updateOne({ email }, { password: newHashPassword });
-
-      return res.status(200).send({ message: 'Password change successfully' });
+      return Response.success(res, messageUtil.OK);
+      // return res.status(200).send({ message: 'Password change successfully' });
     } catch (error) {
-      return res.status(500).send({ message: 'Something went wrong' });
+      return Response.serverError(res, error);
+      // return res.status(500).send({ message: 'Something went wrong' });
     }
   };
 }

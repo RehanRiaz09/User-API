@@ -33,6 +33,8 @@ const messageUtil = {
   PASSWORD_STRING_EMPTY: 'Password cannot be an empty field',
   PASSWORD_REQUIRED: 'Password is required',
   REGISTER_AGAIN: 'User not found please register',
+  REQUIRED_ALL_FIELD: 'Please required all field',
+  PASSWORD_NOT_MATCH: 'Current password does not match',
 
   // Product messages
   PRODUCT_TITLE_STRING_BASE: 'Product should be a type of text',
