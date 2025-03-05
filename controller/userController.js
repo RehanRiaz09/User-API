@@ -15,61 +15,77 @@ import nodemailer from 'nodemailer';
 class UserController {
   SignUp = async (req, res) => {
     try {
+      // find the user for the emeil
       let user = await userService.findUser({ email: req.body.email });
+      // check the exist or not
       if (user) {
-        return Response.ExistallReady(res, messageUtil.ALL_READY_EXIST);
+        return Response.ExistallReady(res, messageUtil.ALL_READY_EXIST); // return a response
       }
+      // signup the user
       user = await userService.createUser({
         ...req.body,
-        password: await bcryptHash(req.body.password),
+        password: await bcryptHash(req.body.password), // hash the password
       });
-      user.password = await bcryptHash(req.body.password);
-      user.save();
+      // user.password = await bcryptHash(req.body.password);
+      // user.save();
       const token = await jwtHelper.issue({ _id: user._id });
 
-      return Response.success(res, messageUtil.USER_CREATED, user, token);
+      return Response.success(res, messageUtil.USER_CREATED, user, token); // return a response the user created sucessfully
     } catch (error) {
+      // return a response of server error
       return Response.serverError(res, error);
     }
   };
   Login = async (req, res) => {
     try {
+      // find the user via emeil
       let user = await userService.findUser({ email: req.body.email });
+      // check user exist or not
       if (!user) {
-        return Response.notfound(res, messageUtil.NOT_FOUND);
+        return Response.notfound(res, messageUtil.NOT_FOUND); // return the response
       }
+      // check the password correct or not
       const isMatch = await comparePassword(req.body.password, user.password);
       if (!isMatch) {
-        return Response.authorizationError(res, messageUtil.INCORRECT_PASSWORD);
+        return Response.authorizationError(res, messageUtil.INCORRECT_PASSWORD); // return the response of incorrect password
       }
+      // issue the token
       const token = await jwtHelper.issue({ _id: user._id });
-      return Response.success(res, messageUtil.LOGIN_SUCCESS, user, token);
+      return Response.success(res, messageUtil.LOGIN_SUCCESS, user, token); // return the response
     } catch (error) {
+      // return the response of the error
       return Response.serverError(res, error);
     }
   };
   getAllUser = async (req, res) => {
     try {
       let users;
+      // find all user in database
       users = await userService.findAll(req.query);
+      // check user exist or not
       if (!users) {
-        return Response.notfound(res, messageUtil.NOT_FOUND);
+        return Response.notfound(res, messageUtil.NOT_FOUND); // return the response
       }
-      return Response.success(res, messageUtil.OK, users);
+      return Response.success(res, messageUtil.OK, users); // return the response
     } catch (error) {
+      // return the response server error
       return Response.serverError(res, error);
     }
   };
   getOnlyId = async (req, res) => {
     try {
+      // Extracts the inventoryId parameter from the request URL
       const id = req.params.userId;
+      // find all user in database
       let user = await userService.findUserId(id, req.userId);
       if (!user) {
-        return Response.notfound(res, messageUtil.NOT_FOUND);
+        // check user exist or not
+        return Response.notfound(res, messageUtil.NOT_FOUND); // return the response
       } else {
-        return Response.success(res, messageUtil.OK, user);
+        return Response.success(res, messageUtil.OK, user); // return the response
       }
     } catch (error) {
+      // return the response server error
       return Response.serverError(res, error);
     }
   };
@@ -93,7 +109,8 @@ class UserController {
 
   userUpdate = async (req, res) => {
     try {
-      const userId = req.params.userId;
+      const userId = req.pa;
+      rams.userId;
 
       //  Ensure userId is a valid ObjectId
       if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -104,22 +121,22 @@ class UserController {
       let user = await userService.findUser({
         _id: new mongoose.Types.ObjectId(userId),
       });
-
+      // check user exist or not
       if (!user) {
-        return Response.notfound(res, messageUtil.NOT_FOUND);
+        return Response.notfound(res, messageUtil.NOT_FOUND); // return the response
       }
 
       //  Pass the correct ID for updating the user
       user = await userService.updateUser({ _id: userId }, req.body);
-
+      // check user exist or not
       if (!user) {
-        return Response.notfound(res, messageUtil.NOT_FOUND);
+        return Response.notfound(res, messageUtil.NOT_FOUND); // return the response
       }
-
+      // return the response of sucess
       return Response.success(res, messageUtil.OK, user);
     } catch (error) {
-      console.error('Error updating user:', error);
-      return Response.serverError(res, error);
+      // console.error('Error updating user:', error);
+      return Response.serverError(res, error); // return the response server error
     }
   };
   userDelete = async (req, res) => {
@@ -138,20 +155,20 @@ class UserController {
       const user = await userService.findUser({ _id: userId });
 
       if (!user) {
-        return Response.notfound(res, messageUtil.NOT_FOUND);
+        return Response.notfound(res, messageUtil.NOT_FOUND); // return the response
       }
 
       // ✅ Delete the user
       const deletedUser = await userService.deleteUser({ _id: userId });
 
       if (!deletedUser) {
-        return Response.notfound(res, messageUtil.NOT_FOUND);
+        return Response.notfound(res, messageUtil.NOT_FOUND); // return the response
       }
 
-      return Response.success(res, messageUtil.OK, deletedUser);
+      return Response.success(res, messageUtil.OK, deletedUser); // return the response
     } catch (error) {
-      console.error('Error deleting user:', error);
-      return Response.serverError(res, error);
+      // console.error('Error deleting user:', error);
+      return Response.serverError(res, error); // return the response
     }
   };
 
@@ -159,18 +176,15 @@ class UserController {
   forgetPassword = async (req, res) => {
     try {
       const { email } = req.body;
-
+      // check tue email
       if (!email) {
-        return Response.badRequest(res, messageUtil.EMAIL_REQUIRED);
+        return Response.badRequest(res, messageUtil.EMAIL_REQUIRED); // return the response
       }
-
+      // find the email of user
       const checkUser = await User.findOne({ email });
-
+      // check the user exist or not
       if (!checkUser) {
         return Response.notfound(res, messageUtil.REGISTER_AGAIN);
-        // return res
-        //   .status(400)
-        //   .send({ message: 'User not found please register' });
       }
 
       const token = jwt.sign({ email }, process.env.SECRETKEY, {
@@ -198,9 +212,6 @@ class UserController {
         res,
         'Password reset link send successfully on your gmail account'
       );
-      // return res.status(200).send({
-      //   message: 'Password reset link send successfully on your gmail account',
-      // });
     } catch (error) {
       return Response.serverError(res, error);
       //return res.status(500).send({ message: 'Something went wrong' });
@@ -211,25 +222,26 @@ class UserController {
     try {
       const { token } = req.params;
       const { password } = req.body;
-
+      // check the passowrd
       if (!password) {
         return Response.badRequest(res, messageUtil.PASSWORD_REQUIRED);
         // return res.status(400).send({ message: 'Please provide password' });
       }
 
       const decode = jwt.verify(token, process.env.SECRETKEY);
-
+      // find the user by email
       const user = await User.findOne({ email: decode.email });
-
+      // hash new poassword
       const newhashPassword = await hashPassword(password);
 
       user.password = newhashPassword;
+      // save new password in database
       await user.save();
-      return Response.success(res, 'Password reset successfully');
-      // return res.status(200).send({ message: 'Password reset successfully' });
+      // return the response
+      return Response.success(res, 'Password reset successfully'); // return the response
     } catch (error) {
+      // return the response server error
       return Response.serverError(res, error);
-      // return res.status(500).send({ message: 'Something went wrong' });
     }
   };
   changePassword = async (req, res) => {

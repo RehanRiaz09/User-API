@@ -1,9 +1,9 @@
 import express from 'express';
 const routes = express.Router();
-import userRouter from './users.js';
-import productRouter from './products.js';
-import forecastRouter from './forecasts.js';
-import inventoryRouter from './inventories.js';
+import userRouter from './userRouter.js';
+import productRouter from './productRouter.js';
+import forecastRouter from './forecastRouter.js';
+import inventoryRouter from './inventorieRouter.js';
 
 routes.use('/user', userRouter);
 routes.use('/product', productRouter);

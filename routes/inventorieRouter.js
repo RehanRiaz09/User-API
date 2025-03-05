@@ -1,6 +1,6 @@
 import express from 'express';
 const routes = express.Router();
-import inventoryController from '../controller/inventories.js';
+import inventoryController from '../controller/inventorieController.js';
 
 routes.post('/create', inventoryController.inventoryCreate);
 routes.get('/', inventoryController.getAllinventory);

@@ -2,7 +2,7 @@ import express from 'express';
 const routes = express.Router();
 import multer from 'multer';
 import Product from '../model/product.js';
-import productController from '../controller/products.js';
+import productController from '../controller/productcontroller.js';
 import authmiddleware from '../middleware/auth.js';
 
 const storage = multer.diskStorage({

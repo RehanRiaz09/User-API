@@ -1,6 +1,6 @@
 import express from 'express';
 const routes = express.Router();
-import forecastController from '../controller/forecasts.js';
+import forecastController from '../controller/forecastController.js';
 
 routes.post('/', forecastController.forecastCreate);
 routes.get('/', forecastController.getAllForecast);
