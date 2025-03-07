@@ -5,16 +5,16 @@ class userValidation {
   signup = (req, res, next) => {
     try {
       const schema = Joi.object({
-        first_name: Joi.string().required().messages({
-          'string.base': messageUtil.FIRSTNAME_STRING_BASE,
-          'string.empty': messageUtil.FIRSTNAME_STRING_EMPTY,
-          'any.required': messageUtil.FIRSTNAME_REQUIRED,
+        name: Joi.string().required().messages({
+          'string.base': messageUtil.NAME_STRING_BASE,
+          'string.empty': messageUtil.NAME_STRING_EMPTY,
+          'any.required': messageUtil.NAME_REQUIRED,
         }),
-        last_name: Joi.string().required().messages({
-          'string.base': messageUtil.LASTNAME_STRING_BASE,
-          'string.empty': messageUtil.LASTNAME_STRING_EMPTY,
-          'any.required': messageUtil.LASTNAME_REQUIRED,
-        }),
+        // last_name: Joi.string().required().messages({
+        //   'string.base': messageUtil.LASTNAME_STRING_BASE,
+        //   'string.empty': messageUtil.LASTNAME_STRING_EMPTY,
+        //   'any.required': messageUtil.LASTNAME_REQUIRED,
+        // }),
         // postal_code: Joi.string().required().messages({
         //   'string.base': messageUtil.POSTALCODE_STRING_BASE,
         //   'string.empty': messageUtil.POSTALCODE_STRING_EMPTY,

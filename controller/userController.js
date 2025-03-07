@@ -77,7 +77,9 @@ class UserController {
       // Extracts the inventoryId parameter from the request URL
       const id = req.params.userId;
       // find all user in database
-      let user = await userService.findUserId(id, req.userId);
+      let user = await userService
+        .findUserId(id, req.userId)
+        .select('-password');
       if (!user) {
         // check user exist or not
         return Response.notfound(res, messageUtil.NOT_FOUND); // return the response

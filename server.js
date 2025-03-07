@@ -4,11 +4,14 @@ import cors from 'cors';
 import routes from './routes/routes.js';
 import connectDB from './config/database.js';
 import multer from 'multer';
+import morgan from 'morgan';
 
 connectDB();
 
+// app.use(express.json());
 app.use(express.json({ urlencoded: true }));
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(morgan('tiny'));
 
 const upload = multer({ dest: 'uploads/' });
 app.get('/', (req, res) => {
