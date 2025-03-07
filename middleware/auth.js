@@ -20,6 +20,12 @@ const authMiddleware = (req, res, next) => {
     return res.status(401).json({ message: 'Invalid Token' });
   }
 };
+const isAdmin = (req, res, next) => {
+  if (!req.user || req.user.role !== 'admin') {
+    return Response.unauthorized(res, 'Access denied. Admins only.');
+  }
+  next();
+};
 const authenticateUser = (req, res, next) => {
   const token = req.header('Authorization');
 
@@ -43,4 +49,5 @@ const authenticateUser = (req, res, next) => {
 export default {
   authMiddleware,
   authenticateUser,
+  isAdmin,
 };
