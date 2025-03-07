@@ -19,7 +19,7 @@ class UserController {
       let user = await userService.findUser({ email: req.body.email });
       // check the exist or not
       if (user) {
-        return Response.ExistallReady(res, messageUtil.ALL_READY_EXIST); // return a response
+        return Response.ExistallReady(res, messageUtil.ALL_READY_EXIST);
       }
       // signup the user
       user = await userService.createUser({
